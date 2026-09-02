@@ -4,7 +4,7 @@ import rich
 from rich import print
 name = input("Enter your first name :")
 nickname = input("Enter your nickname :")
-birth_year = int(input("Enter your birth year :"))
+birth_year = input("Enter your birth year :")
 
 birth_year = int(birth_year)
 
@@ -18,9 +18,9 @@ email = "[bold red]"+ email
 username = "[italic blue]"+ username
 
 if birth_year > 2026:
-    print("Invalid birth year.")
+    print("[bold red]Invalid birth year.")
 elif birth_year < 1912:
-    print("Invali birth year.")    
+    print("[bold red]Invalid birth year.")    
 else:
     print("")
     print("   ---Your account details---")
