@@ -1,23 +1,26 @@
-read -p "are you root? : " root
+#!/bin/bash
 
-if [[ $root == "yes" ]] ; then
- echo "     [+]create the enviroment..."
- sudo apt install python3-venv
- python -m venv venv
- source venv/bin/activate
- echo "     [+]install the libaries..."
- pip install requests
- pip install socket
- 
- pip install base64
- pip install base58
- pip install datetime
- pip install rich 
- pip install pyfiglet
- pip install geocoder
- pip install folium
+# طلب تأكيد الصلاحيات من المستخدم
+read -p "Are you root/sudo user? (yes/no): " root
 
-elif [[ $root == "no" ]] ; then
- echo "you most to be root to use this programme are you root!"
-
-fi 
+if [[ "$root" == "yes" ]]; then
+    echo "[+] Creating the environment..."
+    
+    # تحديث المستودعات وتثبيت حزمة البيئة الافتراضية
+    sudo apt update && sudo apt install -y python3-venv python3-pip
+    
+    # إنشاء البيئة الافتراضية وتفعيلها
+    python3 -m venv venv
+    source venv/bin/activate
+    
+    echo "[+] Installing the libraries..."
+    # ترقية أداة pip أولاً
+    pip install --upgrade pip
+    
+    # تثبيت المكتبات الخارجية فقط
+    pip install requests base58 rich pyfiglet geocoder folium
+    
+    echo "[+] Environment setup successfully!"
+else
+    echo "[-] Operation cancelled. You must have sudo privileges to run this script."
+fi
