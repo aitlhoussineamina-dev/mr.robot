@@ -18,7 +18,7 @@ if [[ "$root" == "yes" ]]; then
     pip install --upgrade pip
     
     # تثبيت المكتبات الخارجية فقط
-    pip install requests base58 rich pyfiglet geocoder folium
+    pip install requests base58 rich pyfiglet geocoder folium logging threading
     
     echo "[+] Environment setup successfully!"
 else
