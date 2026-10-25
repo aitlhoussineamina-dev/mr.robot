@@ -68,8 +68,8 @@ If you prefer to set up dependencies manually:
 # Create and activate virtual environment
 python3 -m venv venv
 source venv/bin/activate
+```
 
----
 
 ## 💻 Usage
 
