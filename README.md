@@ -69,10 +69,6 @@ If you prefer to set up dependencies manually:
 python3 -m venv venv
 source venv/bin/activate
 
-# Install required Python packages
-pip install pyfiglet rich requests base58 geocoder folium scapy
-```
-
 ---
 
 ## 💻 Usage
