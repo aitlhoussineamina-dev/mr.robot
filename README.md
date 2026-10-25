@@ -1,95 +1,117 @@
-# 🤖 Mr. Robot - Cyber Tool
+# 🤖 Mr. Robot - All-in-One Cybersecurity Toolkit
 
-![Python Version](https://img.shields.io/badge/python-3.x-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Bash-orange.svg)
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.8%2B-blue.svg" alt="Python Version">
+  <img src="https://img.shields.io/badge/Platform-Linux%20%2F%20Termux-orange.svg" alt="Platform">
+  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
+</p>
 
-A lightweight, terminal-based reconnaissance and utility suite written in Python. **Mr. Robot** combines domain lookup, directory brute-forcing, decoding utilities, server header analysis, and interactive IP geolocation mapping into a single command-line interface.
+**Mr. Robot** is a modular Python-based reconnaissance and network utility toolkit designed for ethical hacking, penetration testing, and web analysis. It consolidates multiple powerful utilities into a single interactive command-line interface.
 
 ---
 
-## 📸 Key Features
+## 🚀 Features
 
-| Option | Feature | Description |
+The toolkit features an interactive menu with **10 distinct tools**:
+
+| Option | Module Name | Description |
 | :---: | :--- | :--- |
-| **1** | **IP Resolver** | Resolve web domain names to direct server IP addresses using native socket lookups. |
-| **2** | **HTTP Status Checker** | Quickly verify website availability and retrieve standard HTTP status codes. |
-| **3** | **Path Scanner** | Scan target URLs for common sensitive endpoints (`/admin.php`, `/robots.txt`, `/secret`, etc.). |
-| **4** | **Base58 Decoder** | Decode Base58-encoded hash strings back into readable text. |
-| **5** | **Domain Info (WHOIS)** | Query public domain registration details via WHOIS web API integration. |
-| **6** | **IP Location Finder** | Geolocate IP addresses and automatically export interactive map markers using `folium`. |
-| **7** | **Base64 Decoder** | Instantly decode Base64 strings directly in the terminal. |
-| **8** | **Server Info Inspection** | Fetch and display server response headers for quick security profiling. |
+| **1** | **Server IP Resolver** | Resolves domain names to their corresponding server IP addresses using socket programming. |
+| **2** | **Web Status Checker** | Fetches and displays HTTP status codes for target URLs. |
+| **3** | **Path Scanner** | Brute-forces common web directories, files, and backup paths (`robots.txt`, `admin.php`, `.history`, etc.). |
+| **4** | **Base58 Decoder** | Decodes Base58-encoded strings back to plain text. |
+| **5** | **OSINT Module** | *[Placeholder / Under Development]* |
+| **6** | **General Info (WHOIS)** | Queries domain registration and WHOIS information via `api.whois.vu`. |
+| **7** | **IP Location Finder** | Geolocates target IP addresses and generates an interactive Folium map visualization. |
+| **8** | **Base64 Decoder** | Decodes Base64-encoded hashes/strings. |
+| **9** | **Server Header Inspector** | Inspects and displays HTTP response headers (`Server`, `X-Powered-By`, etc.) of a web server. |
+| **10** | **Network Monitor / ARP** | Performs ARP spoofing and sniffs local network DNS queries using Scapy and multithreading. |
 
 ---
 
-## 📋 Prerequisites
+## 🛠️ Prerequisites & Dependencies
 
-Ensure you have the following installed on your system before proceeding:
+Make sure you have **Python 3.x** installed. The script relies on several external Python libraries:
 
-* **Linux** (Ubuntu, Debian, Kali, or Arch recommended)
-* **Python 3.x**
-* **Bash** shell with `sudo` / `root` privileges (required for script dependencies setup)
-
----
-
-## 🛠️ Installation & Setup
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/aitlhoussineamina-dev/mr.robot.git
-   cd mr.robot
-   ```
-
-2. **Run the environment setup script:**
-   ```bash
-   chmod +x setup.sh
-   ./setup.sh
-   ```
-   > 💡 **Note:** When prompted `are you root? :`, enter `yes`. The script will automatically create a Python virtual environment (`venv`) and install required libraries (`rich`, `pyfiglet`, `geocoder`, `folium`, `requests`, `base58`).
-
-3. **Activate the virtual environment:**
-   ```bash
-   source venv/bin/activate
-   ```
+- `pyfiglet`
+- `rich`
+- `requests`
+- `base58`
+- `geocoder`
+- `folium`
+- `scapy`
 
 ---
 
-## 🚀 Usage
+## 📦 Installation & Setup
 
-Run the main interactive script:
+### 1. Clone the Repository
+```bash
+git clone https://github.com/aitlhoussineamina-dev/mr.robot.git
+cd mr.robot
+```
+
+### 2. Run the Environment Setup Script
+The project includes an interactive setup script that sets up a virtual environment and installs all required dependencies:
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+> **Note:** Run the script as a non-root user when prompted. It will verify permissions and guide you through the process.
+
+### 3. Manual Installation (Alternative)
+If you prefer to set up dependencies manually:
+
+```bash
+# Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install required Python packages
+pip install pyfiglet rich requests base58 geocoder folium scapy
+```
+
+---
+
+## 💻 Usage
+
+Once dependencies are installed, launch the interactive toolkit:
 
 ```bash
 python3 all_in_one.py
 ```
 
-### Menu Interface
+Select an option from the menu by entering the corresponding number:
+
 ```text
- 1. IP address of the server          5. General information of the domain
- 2. Web server status code            6. IP location finder
- 3. Paths scanning                    7. Base64 decode
- 4. Base58 decode                     8. Server information
+==================================================
+ 1. IP Address of the Server    5. OSINT Module
+ 2. Web Server Status Code     6. General Information (WHOIS)
+ 3. Paths Scanning              7. IP Location Finder
+ 4. Base58 Decode               8. Base64 Decode
+                                9. Server Information (Headers)
+                                10. Network Monitor (ARP/DNS)
+==================================================
+Choice your option :
 ```
 
 ---
 
-## 📁 Repository Structure
+## ⚙️ How It Works (Code Structure)
 
-```text
-mr.robot/
-├── all_in_one.py   # Main Python interactive application
-├── setup.sh        # Environment preparation and dependency script
-└── README.md       # Project documentation
-```
+- **`all_in_one.py`**: Main application script containing the interactive CLI menu, Rich text formatting, network requests, decoding modules, and Scapy packet monitoring logic.
+- **`setup.sh`**: Automated Bash script ensuring virtual environment isolation and library installation before tool execution.
 
 ---
 
-## 🛡️ Disclaimer
+## ⚠️ Disclaimer
 
-This project is created strictly for **educational and authorized security assessment purposes**. The author assumes no responsibility for misuse or damage caused by this software. Always obtain explicit permission prior to scanning or testing external web servers or infrastructure.
+This tool is designed strictly for **educational purposes and authorized security testing** (ethical hacking). Do not use this tool against targets without explicit permission. The developer assumes no liability for misuse or damage caused by this software.
 
 ---
 
-## 📜 License
+## 📄 License
 
-Distributed under the [MIT License](LICENSE).
+Distributed under the **MIT License**. See `LICENSE` for more information.
