@@ -15,7 +15,7 @@ print("              1.[italic red]ip adress of the server        [/]6.[italic r
 print("              2.[italic red]web server status_code         [/]7.[italic red]ip location finder             ")
 print("              3.[italic red]paths scaning                  [/]8.[italic red]base64 decode ")
 print("              4.[italic red]base58 decode                  [/]9.[italic red]server information")      
-print("              5.[italic red]oisnt tool                     [/]10.[italic red]hack device in network")
+print("              5.[italic red]make qr_code                   [/]10.[italic red]hack device in network")
 choice = input("choice your option : ")
 
 
@@ -97,8 +97,26 @@ elif choice == "4" :
     print("Time finished : " + str(datetime.now()))
     print("-"*50)
 
-elif choice == "5" :
-    pass
+elif choice == "5":
+    try:
+        import qrcode
+        import requests
+
+        user_input = input("Enter the url : ")
+        response4 = requests.get(user_input)
+
+        # Fix: Check response4.status_code instead of the Response object
+        if response4.status_code == 200:
+            qr_code = qrcode.make(user_input)
+            qr_code.save("qr_code.png")
+            print("Success!")
+        else:
+            print("Invalid URL or page not found! (Status code:", response4.status_code, ")")
+            
+    except requests.exceptions.RequestException as e:
+        print("Invalid url!")
+    except Exception as e:
+        print("Invalid url!")
 
 elif choice == "6" :
     import requests 
